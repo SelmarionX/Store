@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'SelmarionX$default',
+        'NAME': 'SelmarionX$orion',
         'USER': 'SelmarionX',
         'PASSWORD': os.getenv('MYSQL_PASSWORD'),
         'HOST': 'SelmarionX.mysql.pythonanywhere-services.com',
