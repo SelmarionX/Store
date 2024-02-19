@@ -1,4 +1,7 @@
 #SelmarionX_Great111
 #  account id acct_1Ok75WDNX5ByWz6u
+/media/
+/static/
 *.log
 *.pyc
+*.sqlite3

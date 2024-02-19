@@ -39,10 +39,14 @@ class UserRegistrationForm(UserCreationForm):
         fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
 
     def save(self, commit=True):
-        user = super(UserCreationForm, self).save(commit=True)
-        expiration = now() + timedelta(hours=48)
-        record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
-        record.send_verification_email()
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+            expiration = now() + timedelta(hours=48)
+            record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
+            record.save()  # Сохраняем EmailVerification в базе данных
+            record.send_verification_email()
         return user
 
 

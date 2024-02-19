@@ -31,10 +31,13 @@ class EmailVerification(models.Model):
         send_mail(
             subject=subject,
             message=message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
+            from_email=settings.EMAIL_HOST_USER, #DEFAULT_FROM_EMAIL,
             recipient_list=[self.user.email],
             fail_silently=False,
         )
 
     def is_expired(self):
         return True if now() >= self.expiration else False
+
+
+

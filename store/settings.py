@@ -22,16 +22,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'e5f3fd8749e2ba2ae752eb095d201fa8bde6f84bb115fcc1a5138c46f18bb796'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    '127.0.0.1'
+    '127.0.0.1',
+    'selmarionx.pythonanywhere.com',
 
 ]
 DOMAIN_NAME = 'http://127.0.0.1:8000'
@@ -67,9 +68,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 
-    "allauth.account.middleware.AccountMiddleware",
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'store.urls'
@@ -103,12 +104,15 @@ INTERNAL_IPS = [
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "store_db",
-        "USER": "store_username",
-        "PASSWORD": "store_password",
-        "HOST": "localhost",
-        "PORT": "5432",
+        'ENGINE': 'django.db.backends.mysql',
+        "NAME": "SelmarionX$orion",
+        "USER": "SelmarionX",
+        "PASSWORD": "os.getenv('MYSQL_PASSWORD')",
+        "HOST": "SelmarionX.mysql.pythonanywhere-services.com",
+        'OPTIONS': {
+            'init_command': "SET NAMES 'utf8mb4';SET sql_mode = 'STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+        },
     }
 }
 
@@ -147,7 +151,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (BASE_DIR / 'static',)
+STATIC_ROOT = BASE_DIR / 'static'
+# STATICFILES_DIRS = (BASE_DIR / 'static',)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -164,15 +169,15 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Sending emails
-# EMAIL_HOST = 'smtp.yandex.ru'
-# EMAIL_PORT = 465
-# EMAIL_USE_SSL = True
-# EMAIL_USE_TLS = False
-#
-# EMAIL_HOST_USER = 'testnegodyaev@yandex.ru'
-# EMAIL_HOST_PASSWORD = 'hpsuorkkagabitjf'
-# DEFAULT_FROM_EMAIL = 'testnegodyaev@yandex.ru'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
+
+EMAIL_HOST_USER = 'testnegodyaev@yandex.ru'
+EMAIL_HOST_PASSWORD = 'hpsuorkkagabitjf'
+DEFAULT_FROM_EMAIL = 'testnegodyaev@yandex.ru'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # OAuth
 AUTHENTICATION_BACKENDS = [
@@ -185,8 +190,6 @@ SOCIALACCOUNT_PROVIDERS = {
     'github': {
         'SCOPE': [
             'user',
-            'repo',
-            'read:org',
         ],
     }
 }

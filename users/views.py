@@ -60,7 +60,7 @@ class UserProfileView(TitleMixin, UpdateView):
     template_name = 'users/profile.html'
     title = 'Store - Личный кабинет'
 
-    def get_success_url(self, **kwargs):
+    def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.object.id,))
 
     # def get_context_data(self, **kwargs):
